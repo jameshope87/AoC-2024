@@ -1,5 +1,6 @@
 import os
 import pathlib
+from collections import Counter
 
 DAY = 1
 
@@ -18,19 +19,29 @@ def filehandling(filename):
   #print(list1,list2)
   return list1, list2
 
-def main(test = False):
+def part2Pass(lists_to_check):
+  c = Counter(lists_to_check[1])
+  #print(c)
+  similarity = 0
+  for x in lists_to_check[0]:
+    similarity += (c[x]*x)
+  return similarity
+
+def main(test = False, part2 = False):
   if test:
     locationIDs = filehandling(TESTPATH)
   else:
     locationIDs = filehandling(FILEPATH)
-
-  sum = 0
-  while len(locationIDs[0])>0:
-    distance = abs(locationIDs[0].pop(0) - locationIDs[1].pop(0))
-    #print(distance)
-    sum += distance
-  return sum
+  if part2:
+    return(part2Pass(locationIDs))
+  else:
+    difference = 0
+    while len(locationIDs[0])>0:
+      distance = abs(locationIDs[0].pop(0) - locationIDs[1].pop(0))
+      #print(distance)
+      difference += distance
+    return difference
 
 
 if __name__ == "__main__":
-  print(main())
+  print(main(False, True))

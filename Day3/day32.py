@@ -21,7 +21,7 @@ def find_mults(content, part2):
       enabled = True
     if content[charid:charid+7] == "don't()":
       enabled = False
-    print(content[charid:charid+4])
+    #print(content[charid:charid+4])
     if content[charid:charid+4] == 'mul(':
       end = content[charid:].find(')')+charid+1
       if end == 0:

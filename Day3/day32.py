@@ -14,31 +14,23 @@ def filehandling(filename, part2):
     find_mults(content, part2)
   return
 
-def find_mults(line, part2):
+def find_mults(content, part2):
   global enabled
-  while True:
-    start = line.find('mul(')
-    if part2 and enabled:
-      start_dont = line.find("don't()")
-      if -1 < start_dont < start:
-        enabled = False
-
-    elif part2 and not enabled:
-      start_do = line.find("do()")
-      if -1 < start_do < start:
-        enabled = True
-
-    if start == -1:
-      break
-    line = line[start:]
-    end = line.find(')')+1
-    if end == 0:
-      break
-    candidate = line[:end]
-    valid = check_validity(candidate)
-    if valid and enabled:
-      mult_list.append(valid)
-    line = line[4:]
+  for charid, char in enumerate(content):
+    if content[charid:charid+4] == 'do()':
+      enabled = True
+    if content[charid:charid+7] == "don't()":
+      enabled = False
+    print(content[charid:charid+4])
+    if content[charid:charid+4] == 'mul(':
+      end = content[charid:].find(')')+charid+1
+      if end == 0:
+        break
+      candidate = content[charid:end]
+      valid = check_validity(candidate)
+      if valid and enabled:
+        mult_list.append(valid)
+      
   
 
 def check_validity(candidate):
